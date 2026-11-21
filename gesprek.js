@@ -477,7 +477,7 @@
       const r = await fetch('api/klant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'nabespreking', persona: G.klant.id, geschiedenis: G.geschiedenis, meters: M.reeks.map((p) => [p.relatie, p.betaalbereid]) }) });
       const j = await r.json(); if (!r.ok) throw new Error(j.fout || 'Geen nabespreking ontvangen');
       const gehaald = (j.criteria || []).filter((c) => c.gehaald).length;
-      toonNabespreking({ titel: gehaald === 3 ? 'Sterk gesprek' : gehaald === 2 ? 'Goed op weg' : 'Hier valt nog veel te leren', klasse: gehaald === 3 ? 'goed' : gehaald === 2 ? 'half' : 'slecht', samen: j.samenvatting, goed: j.werkte || [], beter: j.verbeterpunt, alt: j.voorbeeldzin ? `<b>Probeer bijvoorbeeld</b>${esc(j.voorbeeldzin)}` : '', crit: j.criteria || [], tip: j.tip, doorAi: true });
+      toonNabespreking({ titel: ['Hier valt nog veel te leren', 'Een begin, met ruimte om te groeien', 'Goed op weg', 'Sterk gesprek'][klem(gehaald, 0, 3)], klasse: gehaald === 3 ? 'goed' : gehaald >= 1 ? 'half' : 'slecht', samen: j.samenvatting, goed: j.werkte || [], beter: j.verbeterpunt, alt: j.voorbeeldzin ? `<b>Probeer bijvoorbeeld</b>${esc(j.voorbeeldzin)}` : '', crit: j.criteria || [], tip: j.tip, doorAi: true });
     } catch (e) {
       toonNabespreking({ titel: 'De nabespreking lukte niet', klasse: 'slecht', samen: 'Het taalmodel gaf geen antwoord: ' + e.message, goed: [], beter: '', alt: '', crit: [], doorAi: true });
     }
