@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Het oefenkantoor · AI voor Docenten</title>
+<meta name="description" content="Wat AI kan betekenen voor het leren van mbo-studenten Business Services: zes rollen van AI in één kantoor, met een uitgewerkt klantgesprek.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--paars:#a15df5;--paars-d:#7947ba;--paars-l:#ebdfff;--paars-xl:#f6f1ff;--ink:#14101f;--tekst:#4a5568;--lijn:rgba(40,20,80,.12);
+  --rel:#119a77;--rel-l:#d8f2e9;--bet:#d9891a;--bet-l:#fbecd2;--rood:#d64545;--rood-l:#fbe3e3;--wit:#fff;--r:14px}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden;background:#f4effc}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--tekst);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0}
+button{font:inherit;cursor:pointer}
+#bg{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 38%,#fbf8ff 0%,#efe6fd 60%,#e6d9fb 100%)}
+#bg::after{content:"";position:absolute;right:0;top:0;width:42vw;height:46vh;background-image:radial-gradient(rgba(161,93,245,.28) 1.6px,transparent 1.8px);background-size:22px 22px;-webkit-mask-image:linear-gradient(225deg,#000 10%,transparent 70%);mask-image:linear-gradient(225deg,#000 10%,transparent 70%)}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;outline:none}
+#labels{position:fixed;inset:0;pointer-events:none;z-index:3}
+.lbl{position:absolute;left:0;top:0;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:auto;cursor:pointer;transition:opacity .3s}
+.lbl .naam{background:#fff;border:1px solid var(--lijn);border-radius:999px;padding:6px 13px;font-weight:700;font-size:14px;color:var(--ink);box-shadow:0 6px 18px rgba(60,30,120,.12);white-space:nowrap}
+.lbl .rol{display:inline-flex;align-items:center;gap:6px;background:var(--paars);color:#fff;border-radius:999px;padding:3px 10px 3px 7px;font-size:12px;font-weight:600;white-space:nowrap}
+.lbl .rol::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.lbl.uit .naam{border:2px solid var(--paars);padding:5px 12px}
+.lbl .badge{font-size:11.5px;font-weight:700;color:var(--paars-d);background:#fff;border-radius:999px;padding:2px 9px;border:1px dashed var(--paars)}
+.lbl:hover .naam,.lbl.on .naam{background:var(--ink);color:#fff;border-color:var(--ink)}
+body.verborgen .lbl{opacity:0;pointer-events:none}
+
+header#top{position:fixed;left:24px;right:24px;top:18px;display:flex;align-items:center;gap:18px;z-index:5;pointer-events:none}
+header#top>*{pointer-events:auto}
+.logo img{height:52px;display:block}
+.titel{border-left:2px solid var(--paars-l);padding-left:18px}
+.titel h1{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.titel p{margin:2px 0 0;font-size:14.5px}
+.tools{margin-left:auto;display:flex;gap:8px}
+.sec{background:#fff;border:1px solid var(--lijn);color:var(--ink);border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px}
+.sec:hover{border-color:var(--paars);color:var(--paars-d)}
+.sec.on{background:var(--paars-l);border-color:var(--paars);color:var(--paars-d)}
+.cta{background:var(--paars);color:#fff;border:0;border-radius:12px;padding:13px 26px;font-weight:700;font-size:16px;box-shadow:0 8px 22px rgba(161,93,245,.35)}
+.cta:hover{background:var(--paars-d)}
+.cta:disabled{opacity:.45;cursor:default}
+.eyebrow{display:block;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--paars-d)}
+.kaart{background:rgba(255,255,255,.92);border:1px solid var(--lijn);border-radius:var(--r);box-shadow:0 14px 40px rgba(60,30,120,.12);backdrop-filter:blur(8px)}
+#intro{position:fixed;left:24px;bottom:24px;max-width:430px;padding:18px 20px;z-index:4;transition:opacity .35s,transform .35s}
+#intro p{margin:8px 0 10px;font-size:15px;line-height:1.55;color:var(--ink)}
+b.ai{color:var(--paars-d)}
+.legenda{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
+.orb{display:inline-block;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f2e6ff,var(--paars) 55%,var(--paars-d));box-shadow:0 0 0 4px rgba(161,93,245,.18)}
+.ring{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px dashed var(--paars);margin-left:10px}
+.zeven{font-size:12.5px;margin:10px 0 0;color:var(--tekst)}
+body.verborgen #intro{opacity:0;transform:translateY(12px);pointer-events:none}
+
+.paneel{position:fixed;right:24px;top:96px;bottom:24px;width:min(440px,calc(100vw - 48px));padding:24px 24px 20px;z-index:6;overflow:auto;transform:translateX(calc(100% + 40px));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.paneel.open{transform:none}
+.paneel h2{font-size:27px;line-height:1.15;margin:6px 0 10px;font-weight:800}
+.sluit{position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--lijn);background:#fff;font-size:20px;line-height:1;color:var(--ink)}
+.rolchip{display:inline-flex;align-items:center;gap:8px;background:var(--paars-l);color:var(--paars-d);border-radius:999px;padding:6px 14px 6px 10px;font-weight:700;font-size:14px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 14px}
+.pgrid h4,.waarom h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);margin-bottom:4px}
+.pgrid p,.waarom p{margin:0;font-size:14.5px;line-height:1.5}
+.dialoog{display:flex;flex-direction:column;gap:8px;background:var(--paars-xl);border-radius:12px;padding:14px;margin-bottom:14px}
+.bel{max-width:88%;padding:9px 13px;border-radius:14px;font-size:14px;line-height:1.45;color:var(--ink)}
+.bel.ai{background:#fff;border:1px solid rgba(161,93,245,.35);border-bottom-left-radius:4px}
+.bel.ai::before{content:"AI-collega";display:block;font-size:11px;font-weight:700;color:var(--paars-d);margin-bottom:2px}
+.bel.student{align-self:flex-end;background:#2b2140;color:#fff;border-bottom-right-radius:4px}
+.bel.student::before{content:"Student";display:block;font-size:11px;font-weight:700;color:#c9b6ff;margin-bottom:2px}
+.waarom{border-left:3px solid var(--paars);padding:2px 0 2px 12px;margin:4px 0 18px}
+.noot{font-size:13px;margin:10px 0 0}
+
+.overlay{position:fixed;inset:0;z-index:10;display:none;background:rgba(244,239,252,.86);backdrop-filter:blur(10px)}
+.overlay.open{display:flex;animation:in .35s ease}
+@keyframes in{from{opacity:0}}
+
+#briefing{align-items:center;justify-content:center;padding:24px}
+.brief{width:min(980px,100%);max-height:100%;overflow:auto;padding:30px 32px}
+.brief-kop h2{font-size:34px;font-weight:800;margin:4px 0 6px}
+.brief-kop p{margin:0;font-size:16px;color:var(--ink)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 18px}
+.mode{text-align:left;background:#fff;border:2px solid var(--lijn);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center}
+.mode .ic{grid-row:span 2;width:48px;height:48px;border-radius:12px;background:var(--paars-l);display:grid;place-items:center;color:var(--paars-d);font-weight:800;font-size:14px}
+.mode b{font-size:18px;color:var(--ink)}
+.mode span.u{font-size:14px;line-height:1.45}
+.mode em{grid-column:2;font-style:normal;font-size:12.5px;font-weight:600;color:var(--tekst)}
+.mode em.ok{color:var(--rel)}.mode em.nee{color:var(--rood)}
+.mode.on{border-color:var(--paars);box-shadow:0 0 0 4px rgba(161,93,245,.15)}
+.klantkeuze{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 18px}
+.kk{background:#fff;border:2px solid var(--lijn);border-radius:14px;padding:12px 14px;text-align:left}
+.kk b{display:block;color:var(--ink);font-size:15.5px}
+.kk span{font-size:13.5px}
+.kk i{display:inline-block;font-style:normal;font-size:11.5px;font-weight:700;color:var(--paars-d);background:var(--paars-l);border-radius:999px;padding:2px 8px;margin-bottom:6px}
+.kk.on{border-color:var(--paars);box-shadow:0 0 0 4px rgba(161,93,245,.15)}
+.brief-body{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.feiten{background:var(--paars-xl);border-radius:14px;padding:16px 18px}
+.feiten h4{margin-bottom:8px}
+.feit{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:7px 0;border-top:1px solid rgba(121,71,186,.15);font-size:14.5px}
+.feit:first-of-type{border-top:0}
+.feit b{color:var(--ink);font-weight:600}
+.doelen h4{margin:0 0 6px;font-size:15px}
+.doelen p{margin:0 0 14px;color:var(--ink);font-size:15px}
+.doelen ol{margin:0;padding-left:20px;font-size:15px;color:var(--ink);line-height:1.6}
+.brief-acties{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:12px}
+
+#gesprek{flex-direction:column;background:#f4effc}
+.g-top{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--lijn);background:#fff}
+.g-status{display:flex;align-items:baseline;gap:10px;margin-left:8px;color:var(--ink);font-weight:700;font-size:16px}
+.g-status .g-sub{font-weight:500;color:var(--tekst);font-size:14px}
+.live-dot{width:10px;height:10px;border-radius:50%;background:var(--rel);box-shadow:0 0 0 0 rgba(17,154,119,.5);animation:puls 1.6s infinite;align-self:center}
+@keyframes puls{70%{box-shadow:0 0 0 9px rgba(17,154,119,0)}100%{box-shadow:0 0 0 0 rgba(17,154,119,0)}}
+#gTijd{font-variant-numeric:tabular-nums;font-weight:600;color:var(--tekst);font-size:14px}
+.chip{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--paars-l);color:var(--paars-d)}
+.g-top .rechts{margin-left:auto;display:flex;gap:8px}
+.g-main{flex:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,1fr);min-height:0}
+.g-scene{position:relative;overflow:hidden;background:#efe4d3}
+#portret{position:absolute;inset:0}
+#portret svg{width:100%;height:100%;display:block}
+.ondertitel{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:min(88%,760px);background:rgba(20,16,31,.86);color:#fff;border-radius:16px;padding:14px 20px;font-size:21px;line-height:1.45;font-weight:500;text-align:center;opacity:0;transition:opacity .3s}
+.ondertitel.on{opacity:1}
+.ondertitel .wie{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#f2c56b;margin-bottom:2px}
+.klantkaart{position:absolute;left:18px;top:18px;width:320px;padding:14px 16px}
+.g-side{display:flex;flex-direction:column;gap:14px;padding:20px 22px;overflow:auto;background:#faf7ff;border-left:1px solid var(--lijn)}
+.meters{background:#fff;border:1px solid var(--lijn);border-radius:14px;padding:14px 16px}
+.meter+.meter{margin-top:12px}
+.m-kop{display:flex;align-items:baseline;gap:8px;font-weight:700;color:var(--ink);font-size:15px}
+.m-kop b{margin-left:auto;font-size:22px;font-variant-numeric:tabular-nums}
+.delta{font-style:normal;font-size:13px;font-weight:800;border-radius:999px;padding:1px 8px;opacity:0;transition:opacity .3s}
+.delta.plus{opacity:1;background:var(--rel-l);color:var(--rel)}
+.delta.min{opacity:1;background:var(--rood-l);color:var(--rood)}
+.m-bar{height:12px;border-radius:999px;background:#eee8f6;overflow:hidden;margin-top:6px}
+.m-bar span{display:block;height:100%;width:0;border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+#mRel .m-bar span{background:var(--rel)}#mBet .m-bar span{background:var(--bet)}
+#mRel .m-kop b{color:var(--rel)}#mBet .m-kop b{color:var(--bet)}
+#mSpark{display:block;width:100%;height:46px;margin-top:10px}
+.jij{background:#2b2140;color:#fff;border-radius:14px;border-bottom-right-radius:4px;padding:11px 15px;align-self:flex-end;max-width:92%}
+.jij span{display:block;font-size:11.5px;font-weight:700;color:#c9b6ff;text-transform:uppercase;letter-spacing:.06em}
+.jij p{margin:2px 0 0;font-size:15.5px;line-height:1.45}
+.jij .toon{display:block;margin-top:6px;font-size:12.5px;color:#d9ccff;font-style:italic}
+.vraag{font-weight:700;color:var(--ink);font-size:17px;margin-top:2px}
+.opties{display:flex;flex-direction:column;gap:10px}
+.optie{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;text-align:left;background:#fff;border:2px solid var(--lijn);border-radius:14px;padding:12px 14px;color:var(--ink);font-size:15.5px;line-height:1.45;transition:border-color .2s,transform .2s,opacity .3s}
+.optie .letter{width:38px;height:38px;border-radius:10px;background:var(--paars-l);color:var(--paars-d);display:grid;place-items:center;font-weight:800;font-size:18px}
+.optie:hover{border-color:var(--paars);transform:translateX(-2px)}
+.optie.gekozen{border-color:var(--paars);background:var(--paars-xl)}
+.optie.weg{opacity:.25}
+.opties.wacht .optie{pointer-events:none}
+.live{display:flex;flex-direction:column;gap:12px}
+.caption{min-height:52px;background:#fff;border:1px dashed rgba(121,71,186,.4);border-radius:12px;padding:11px 14px;font-size:15px;color:var(--ink);line-height:1.45}
+.caption.leeg{color:var(--tekst)}
+.mic{align-self:center;width:150px;height:150px;border-radius:50%;border:0;background:var(--paars);color:#fff;font-weight:700;font-size:15px;box-shadow:0 12px 30px rgba(161,93,245,.4);display:grid;place-items:center;padding:20px;text-align:center;transition:transform .15s,background .2s;touch-action:none;user-select:none}
+.mic.op{background:var(--rood);transform:scale(1.06);box-shadow:0 0 0 14px rgba(214,69,69,.18)}
+.mic.denkt{background:var(--paars-d);animation:denk 1.2s infinite}
+@keyframes denk{50%{box-shadow:0 0 0 12px rgba(161,93,245,.15)}}
+#gTyp{display:flex;gap:8px}
+#gTyp input{flex:1;border:1px solid var(--lijn);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink);background:#fff}
+#gAfronden{align-self:center}
+
+#nabespreking{align-items:center;justify-content:center;padding:24px}
+.nb{width:min(1100px,100%);max-height:100%;overflow:auto;padding:28px 32px}
+.nb-kop h2{font-size:32px;font-weight:800;margin:4px 0 4px}
+.nb-kop p{margin:0;font-size:16px;color:var(--ink)}
+.uitkomst{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:5px 14px;font-weight:700;font-size:14px;margin-top:10px}
+.uitkomst.goed{background:var(--rel-l);color:#0b6a52}.uitkomst.half{background:var(--bet-l);color:#8a5208}.uitkomst.slecht{background:var(--rood-l);color:#9b2c2c}
+.nb-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;margin-top:20px}
+.nb-grid h4{font-size:15px;margin-bottom:8px}
+#nbChart{width:100%;height:auto;background:#fff;border:1px solid var(--lijn);border-radius:14px}
+.nb-legenda{display:flex;gap:16px;font-size:13px;margin-top:8px;flex-wrap:wrap}
+.nb-legenda i{display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.nb-blok{background:#fff;border:1px solid var(--lijn);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.nb-blok ul{margin:0;padding:0;list-style:none}
+.nb-blok li{position:relative;padding:4px 0 4px 24px;font-size:14.5px;line-height:1.5;color:var(--ink)}
+.nb-blok.goed li::before{content:"✓";position:absolute;left:0;top:4px;color:var(--rel);font-weight:800}
+.nb-blok.beter{border-left:4px solid var(--bet)}
+.nb-blok.beter p{margin:0 0 6px;font-size:14.5px;line-height:1.5;color:var(--ink)}
+.nb-blok .alt{background:var(--bet-l);border-radius:10px;padding:8px 12px;color:#5c3706}
+.nb-blok .alt b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.crit li::before{content:"";position:absolute;left:0;top:8px;width:14px;height:14px;border-radius:50%;background:var(--rood-l);border:2px solid var(--rood)}
+.crit li.ja::before{background:var(--rel);border-color:var(--rel)}
+.crit li small{display:block;color:var(--tekst);font-size:13px}
+.nb-acties{display:flex;justify-content:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap}
+.nb-noot{font-size:13px;margin:14px 0 0}
+.door-ai{font-size:12px;font-weight:700;color:var(--paars-d);background:var(--paars-l);border-radius:999px;padding:2px 9px;margin-left:8px;vertical-align:middle}
+
+#over .brief{max-width:720px}
+#over p{font-size:15px;line-height:1.6;color:var(--ink)}
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;border-radius:12px;padding:11px 18px;font-size:14.5px;font-weight:500;opacity:0;transition:all .3s;z-index:30;max-width:min(560px,92vw);text-align:center;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#loader{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:#f4effc;transition:opacity .6s}
+#loader.weg{opacity:0;pointer-events:none}
+#loader div{text-align:center;color:var(--ink);font-weight:700}
+.spin{width:44px;height:44px;border-radius:50%;border:3px solid var(--paars-l);border-top-color:var(--paars);margin:0 auto 14px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(1turn)}}
+@media (max-width:900px){
+  .titel p{display:none}.logo img{height:40px}.titel h1{font-size:20px}
+  header#top{left:12px;right:12px;top:12px;gap:12px}.titel{padding-left:12px}
+  #bOver .lang,.zeven{display:none}
+  .lbl .naam{font-size:12px;padding:4px 9px}.lbl .rol,.lbl .badge{display:none}
+  #intro{left:12px;right:12px;bottom:12px;max-width:none;padding:14px 16px}
+  .paneel{left:12px;right:12px;top:auto;bottom:12px;width:auto;max-height:70vh}
+  .modes,.klantkeuze,.brief-body,.nb-grid,.pgrid{grid-template-columns:1fr}
+  .g-main{grid-template-columns:1fr;grid-template-rows:42vh 1fr}
+  .g-side{border-left:0;border-top:1px solid var(--lijn)}
+  .ondertitel{font-size:16px;bottom:12px}
+  .g-status .g-sub,#gKaart,#gModus,#gTijd{display:none}
+  .g-top{padding:10px 12px;gap:8px}.g-status{font-size:14px;margin-left:2px}
+  .brief,.nb{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<canvas id="scene" tabindex="0" aria-label="Het oefenkantoor in 3D. Klik op een afdeling."></canvas>
+<div id="labels"></div>
+
+<header id="top">
+  <a class="logo" href="https://aivoordocenten.nl" target="_blank" rel="noopener"><img src="assets/logo-avd.png" alt="AI voor Docenten"></a>
+  <div class="titel"><h1>Het oefenkantoor</h1><p>Wat AI kan betekenen voor het leren van jouw studenten</p></div>
+  <div class="tools"><button class="sec" id="bOver">Over<span class="lang"> deze app</span></button></div>
+</header>
+
+<section id="intro" class="kaart">
+  <span class="eyebrow">Veluwe Groothandel · zes afdelingen</span>
+  <p>Op elke afdeling werkt een student met een <b class="ai">AI-collega</b>. Die neemt het werk niet over, maar helpt de student het vak te leren. Elke afdeling laat één rol zien. Klik op een afdeling.</p>
+  <div class="legenda"><span class="orb"></span> AI-collega <span class="ring"></span> volledig uitgewerkt</div>
+  <p class="zeven">De rollen komen uit het raamwerk Leerverrijking van AI voor Docenten. De zevende rol, AI als hulpmiddel, hoort bij KIES.</p>
+</section>
+
+<aside id="paneel" class="paneel kaart" aria-hidden="true">
+  <button class="sluit" id="pSluit" aria-label="Sluiten">×</button>
+  <span class="eyebrow" id="pAfd"></span>
+  <h2 id="pTitel"></h2>
+  <div class="rolchip"><span class="orb"></span><span id="pRol"></span></div>
+  <div class="pgrid">
+    <div><h4>De student</h4><p id="pStudent"></p></div>
+    <div><h4>De AI-collega</h4><p id="pAi"></p></div>
+  </div>
+  <div class="dialoog" id="pVoorbeeld"></div>
+  <div class="waarom"><h4>Waarom dit werkt</h4><p id="pWaarom"></p></div>
+  <button class="cta" id="pStart">Start de oefening</button>
+  <p class="noot" id="pNoot">Dit is een voorbeeld van de rol. Deze afdeling is niet verder uitgewerkt.</p>
+</aside>
+
+<section id="briefing" class="overlay" role="dialog" aria-modal="true" aria-labelledby="bTitel">
+  <div class="brief kaart">
+    <div class="brief-kop">
+      <span class="eyebrow">Administratie · Simulator</span>
+      <h2 id="bTitel">De klant die niet betaalt</h2>
+      <p>Jij werkt op de debiteurenadministratie van Veluwe Groothandel. Je belt een klant met openstaande facturen.</p>
+    </div>
+    <div class="modes">
+      <button class="mode on" data-mode="script"><span class="ic">ABC</span><b>Met de zaal</b><span class="u">Vooraf geschreven. De zaal kiest wat je zegt, de klant antwoordt met stem.</span></button>
+      <button class="mode" data-mode="live"><span class="ic">LIVE</span><b>Live gesprek</b><span class="u">Je praat zelf met de klant. AI luistert, reageert en bespreekt het na.</span><em id="liveStatus">Live wordt gecontroleerd…</em></button>
+    </div>
+    <div class="klantkeuze" id="klantKeuze" hidden></div>
+    <div class="brief-body">
+      <div class="feiten"><h4 id="bKlant"></h4><div id="bFeiten"></div></div>
+      <div class="doelen"><h4>Je doel</h4><p id="bDoel"></p><h4>Hier let je op</h4><ol id="bCriteria"></ol></div>
+    </div>
+    <div class="brief-acties"><button class="sec" id="bTerug">← Terug</button><button class="cta" id="bBel">Bel Erik</button></div>
+  </div>
+</section>
+
+<section id="gesprek" class="overlay" role="dialog" aria-modal="true" aria-label="Telefoongesprek">
+  <div class="g-top">
+    <button class="sec" id="gTerug">← Kantoor</button>
+    <div class="g-status"><span class="live-dot"></span><span id="gWie"></span><span class="g-sub" id="gBedrijf"></span><span id="gTijd">00:00</span></div>
+    <span class="chip" id="gModus"></span>
+    <div class="rechts"><button class="sec" id="gKaart">Klantkaart</button><button class="sec on" id="gStem" aria-pressed="true">Stem: aan</button></div>
+  </div>
+  <div class="g-main">
+    <div class="g-scene">
+      <div id="portret"></div>
+      <div class="ondertitel" id="gZegt" aria-live="polite"></div>
+      <div class="klantkaart kaart feiten" id="gKaartPaneel" hidden></div>
+    </div>
+    <div class="g-side">
+      <div class="meters">
+        <div class="meter" id="mRel"><div class="m-kop"><span>Relatie</span><i class="delta"></i><b>0</b></div><div class="m-bar"><span></span></div></div>
+        <div class="meter" id="mBet"><div class="m-kop"><span>Bereid om te betalen</span><i class="delta"></i><b>0</b></div><div class="m-bar"><span></span></div></div>
+        <svg id="mSpark" viewBox="0 0 300 46" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </div>
+      <div class="jij" id="gJij" hidden><span>Jij</span><p></p></div>
+      <div class="vraag" id="gVraag"></div>
+      <div class="opties" id="gOpties"></div>
+      <div class="live" id="gLive" hidden>
+        <div class="caption leeg" id="gCaption">Houd de knop vast (of de spatiebalk) en praat. Laat los als je klaar bent.</div>
+        <button class="mic" id="gMic">Houd vast en praat</button>
+        <form id="gTyp"><input id="gInput" placeholder="Of typ wat je zegt" autocomplete="off" aria-label="Typ wat je zegt"><button class="sec" type="submit">Stuur</button></form>
+        <button class="sec" id="gAfronden">Rond af en bespreek na</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nabespreking" class="overlay" role="dialog" aria-modal="true" aria-labelledby="nbTitel">
+  <div class="nb kaart">
+    <div class="nb-kop">
+      <span class="eyebrow">Nabespreking · de AI stapt uit de rol</span>
+      <h2 id="nbTitel"></h2>
+      <p id="nbSamen"></p>
+      <span class="uitkomst" id="nbUitkomst"></span>
+    </div>
+    <div class="nb-grid">
+      <div>
+        <h4>Zo liep het gesprek</h4>
+        <svg id="nbChart" viewBox="0 0 640 280" role="img" aria-label="Verloop van de meters per beurt"></svg>
+        <div class="nb-legenda"><span><i style="background:var(--rel)"></i>Relatie</span><span><i style="background:var(--bet)"></i>Bereid om te betalen</span><span>● kantelmoment</span></div>
+      </div>
+      <div>
+        <div class="nb-blok goed"><h4>Wat werkte</h4><ul id="nbGoed"></ul></div>
+        <div class="nb-blok beter"><h4>Eén verbeterpunt</h4><p id="nbBeter"></p><p class="alt" id="nbAlt"></p></div>
+        <div class="nb-blok crit"><h4>Succescriteria</h4><ul id="nbCrit"></ul></div>
+      </div>
+    </div>
+    <div class="nb-acties"><button class="sec" id="nbKantoor">Terug naar het kantoor</button><button class="sec" id="nbLive">Probeer het live</button><button class="cta" id="nbOpnieuw">Nieuwe poging</button></div>
+    <p class="nb-noot">Zo werkt de Simulator uit het raamwerk Leerverrijking: de oefening afbakenen, oefenen, de gevolgen van je keuzes ervaren, nabespreken en opnieuw proberen.</p>
+  </div>
+</section>
+
+<section id="over" class="overlay" role="dialog" aria-modal="true" aria-labelledby="oTitel">
+  <div class="brief kaart" style="margin:auto">
+    <span class="eyebrow">Over deze app</span>
+    <h2 id="oTitel" style="font-size:28px;margin:4px 0 10px">Het oefenkantoor</h2>
+    <p>Een demonstratie van AI voor Docenten voor de Docentendag Business Services 2026. Elke afdeling laat één rol zien uit het raamwerk Leerverrijking: AI als simulator, Socratische gesprekspartner, mentor, procesbegeleider, tutor en AI-leerling, en coach. Alleen de administratie is volledig uitgewerkt.</p>
+    <p>Het gesprek met de zaal is vooraf geschreven. In het live gesprek luistert een taalmodel (Google Gemini via OpenRouter) naar wat je zegt, en spreekt een Nederlandse stem het antwoord uit. Wat je zegt en je opname gaan daarvoor naar die diensten. Gebruik met studenten dus geen echte namen of klantgegevens.</p>
+    <p>Veluwe Groothandel, Bakkerij Van Dam en Lunchroom ’t Hoekje zijn verzonnen.</p>
+    <div class="brief-acties"><span></span><button class="cta" id="oSluit">Sluiten</button></div>
+  </div>
+</section>
+
+<div id="toast" role="status"></div>
+<div id="loader"><div><div class="spin"></div>Het kantoor wordt ingericht…</div></div>
+<audio id="stemAudio" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="data.js"></script>
+<script src="kantoor.js"></script>
+<script src="gesprek.js"></script>
+</body>
+</html>
